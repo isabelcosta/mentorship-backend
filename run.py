@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, json
 from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt import JWT
@@ -73,6 +73,22 @@ def create_tables():
     db.create_all()
 
 
+def export_api_to_postman():
+    # previous_value = application.config['SERVER_NAME']
+    # application.config['SERVER_NAME'] = 'localhost:5000/'
+    with application.app_context():
+        urlvars = False  # Build query strings in URLs
+        swagger = True  # Export Swagger specifications
+        data = api.as_postman(urlvars=urlvars, swagger=swagger)
+        f = open(os.path.join('docs', 'postman_collection_v1.json'), 'w')
+        f.write(json.dumps(data))
+        f = open(os.path.join('docs', 'swagger_generated.json'), 'w')
+        f.write(json.dumps(api.__schema__))
+    # application.config['SERVER_NAME'] = previous_value
+
+
 if __name__ == "__main__":
     add_namespaces()
+    export_api_to_postman()
     application.run(port=5000)
+
