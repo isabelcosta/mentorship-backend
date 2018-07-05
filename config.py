@@ -7,7 +7,6 @@ class BaseConfig(object):
     TESTING = False
 
     # SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Flask JWT settings
@@ -54,19 +53,16 @@ class DevelopmentConfig(BaseConfig):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///dev_data.db'
 
-    # mail accounts
-    MAIL_DEFAULT_SENDER = 'certain@example.com'
-
 
 class TestingConfig(BaseConfig):
     ENV = 'testing'
     DEBUG = True
     TESTING = True
 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///test_data.db'
     # Use in-memory SQLite database for testing
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite://'
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///test_data.db'
 
 
 def get_env_config():
