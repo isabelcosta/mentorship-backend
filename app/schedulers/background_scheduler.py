@@ -3,7 +3,8 @@ from app.schedulers.complete_mentorship_cron_job import complete_overdue_mentors
 
 
 def init_scheduler():
-    scheduler = BackgroundScheduler()
+    config = {'apscheduler.timezone': 'Europe/London'}
+    scheduler = BackgroundScheduler(config)
 
     # This cron job runs every day at 23:59h
     # Purpose: complete overdue accepted mentorship relations
